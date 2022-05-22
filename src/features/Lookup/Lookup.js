@@ -6,6 +6,7 @@
 	const REGEX_ROUTE_SYSTEM   = /^([a-zA-Z0-9\- ]+)$/;
 	const REGEX_ROUTE_CURRENT  = /^Current location: (.+)$/;
 	const REGEX_ROUTE_STOP     = /^•\s+(.+)$/;
+	const REGEX_ROUTE_STATION  = /^\d+\.\s+(.+?)(?:\s[VIX]+?)?\s-/;
 	const REGEX_ROUTE_WAYPOINT = /^\d+\.\s+(.+?)\s\(/;
 
 	E.Lookup = (params = {}) => {
@@ -47,6 +48,7 @@
 						const system = (
 							REGEX_ROUTE_SYSTEM.exec(systemRaw)?.[1]  ||
 							REGEX_ROUTE_STOP.exec(systemRaw)?.[1]    ||
+							REGEX_ROUTE_STATION.exec(systemRaw)?.[1] ||
 							REGEX_ROUTE_CURRENT.exec(systemRaw)?.[1] ||
 							REGEX_ROUTE_WAYPOINT.exec(systemRaw)?.[1]
 						);
