@@ -41,7 +41,6 @@
 
 
 		function fetchDetails() {
-			console.log({ fetchDetails: killmail });
 			const attackers = killmail.attackers.map((attacker) => E.Pilot(attacker, true, false));
 			const victim    = E.Pilot(killmail.victim, false, true);
 

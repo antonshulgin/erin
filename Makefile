@@ -18,7 +18,8 @@ build-release:
 	make stylesheets
 
 
-docs:
+release:
+	rm -rf ./docs
 	make build-release
 	mv ./out ./docs
 

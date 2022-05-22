@@ -64,8 +64,6 @@
 
 
 		function parseEncounters(zkbStubs) {
-			console.log({ parseEncounters: zkbStubs });
-
 			const recentStubs = zkbStubs
 				.filter((zkbStub) => !zkbStub.zkb.npc)
 				.slice(0, 13).reduce((out, zkbStub) => {
@@ -94,13 +92,11 @@
 
 			const encounters = genuineKillmails.map((km) => E.Encounter(km, recentStubs[km.killmail_id]));
 
-			console.log('setEncounters', { genuineKillmails, killmails, recentStubs });
-
 			encounters.forEach((encounter) => encounter.fetchDetails());
 
 			dom.encounters.replaceChildren(...encounters.map((encounter) => encounter.render()));
 
-			parseIskDestroyed(encounters, recentStubs);
+			parseIskDestroyed(genuineKillmails, recentStubs);
 		}
 
 
@@ -145,7 +141,6 @@
 
 
 			function doResolve(info) {
-				console.log('System.doResolve', { info });
 				setName(info.name);
 				setStatus(info.security_status);
 			}

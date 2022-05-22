@@ -56,7 +56,6 @@
 
 
 		function setShip(shipInfo) {
-			console.log({ setShip: shipInfo });
 			dom.ship.textContent = shipInfo.name;
 			dom.shipPic.src      = `https://images.evetech.net/types/${shipInfo.type_id}/render?size=32`;
 			dom.shipPic.alt      = shipInfo.name;

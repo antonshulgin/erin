@@ -48,8 +48,6 @@
 
 
 		function fetchSystems(systemIds = []) {
-			console.log({ fetchSystems: systemIds });
-
 			clearOverview();
 
 			Promise.any(systemIds.map((systemId) => fetchSystem(systemId)))
