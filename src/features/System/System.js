@@ -68,7 +68,7 @@
 
 			const recentStubs = zkbStubs
 				.filter((zkbStub) => !zkbStub.zkb.npc)
-				.slice(0, 33).reduce((out, zkbStub) => {
+				.slice(0, 13).reduce((out, zkbStub) => {
 					out[zkbStub.killmail_id] = zkbStub;
 					return out;
 				}, {});
@@ -86,18 +86,40 @@
 
 
 		function setEncounters(killmails = [], recentStubs = {}) {
-			console.log('setEncounters', { killmails, recentStubs });
+			const genuineKillmails = [ ...killmails ]
+				.sort(sortById)
+				.filter(filterGenuine)
+				.filter(filterRecents)
+			;
 
-			const genuineKillmails = filterGenuineKillmails(killmails);
-			const recentKillmails  = filterRecentKillmails(genuineKillmails);
-			const sortedKillmails  = sortKillmails(recentKillmails);
-			const encounters       = sortedKillmails.map((killmail) => E.Encounter(killmail, recentStubs[killmail.killmail_id]));
+			const encounters = genuineKillmails.map((km) => E.Encounter(km, recentStubs[km.killmail_id]));
+
+			console.log('setEncounters', { genuineKillmails, killmails, recentStubs });
 
 			encounters.forEach((encounter) => encounter.fetchDetails());
 
 			dom.encounters.replaceChildren(...encounters.map((encounter) => encounter.render()));
 
-			parseIskDestroyed(recentKillmails, recentStubs);
+			parseIskDestroyed(encounters, recentStubs);
+		}
+
+
+		function sortById(kmA, kmB) {
+			return (kmB.killmail_id - kmA.killmail_id);
+		}
+
+
+		function filterGenuine(km) {
+			return !E.TYPE_IDS_IGNORED.includes(km.victim.ship_type_id);
+		}
+
+
+		function filterRecents(km) {
+			const dateKm   = new Date(km.killmail_time);
+			const dateNow  = new Date();
+			const dateDiff = Math.abs(dateKm - dateNow);
+
+			return (dateDiff <= (1000 * 60 * 60));
 		}
 
 
@@ -112,35 +134,6 @@
 				? `${E.humaniseIsk(iskDestroyed)} destroyed`
 				: 'CLEAR'
 			;
-		}
-
-
-		function sortKillmails(killmails = []) {
-			return [ ...killmails ]
-				.sort((kmA, kmB) => {
-					const timeA = (new Date(kmA.killmail_time)).getTime();
-					const timeB = (new Date(kmB.killmail_time)).getTime();
-					return (timeB - timeA);
-				})
-			;
-		}
-
-
-		function filterGenuineKillmails(killmails = []) {
-			return killmails.filter((km) => !E.TYPE_IDS_IGNORED.includes(km.victim.ship_type_id));
-		}
-
-
-		function filterRecentKillmails(killmails = []) {
-			const MS_HOUR = 1000 * 60 * 60;
-			const timeNow = Date.now();
-
-			return killmails.filter((km) => {
-				const timeKm = (new Date(km.killmail_time)).getTime();
-				const timeDiff = Math.abs(timeKm - timeNow);
-
-				return (timeDiff <= MS_HOUR);
-			});
 		}
 
 
