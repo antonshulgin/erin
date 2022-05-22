@@ -8,6 +8,7 @@
 	const REGEX_ROUTE_STOP     = /^•\s+(.+)$/;
 	const REGEX_ROUTE_STATION  = /^\d+\.\s+(.+?)(?:\s[VIX]+?)?\s-/;
 	const REGEX_ROUTE_WAYPOINT = /^\d+\.\s+(.+?)\s\(/;
+	const REGEX_ROUTE_STARGATE = /^\d+\s+(.+?)\s+Stargate/; // DScan entry
 
 	E.Lookup = (params = {}) => {
 		const root = document.importNode(TEMPLATE.content, true).firstChild;
@@ -46,10 +47,11 @@
 					.map((systemRaw) => systemRaw.trim())
 					.reduce((out, systemRaw) => {
 						const system = (
-							REGEX_ROUTE_SYSTEM.exec(systemRaw)?.[1]  ||
-							REGEX_ROUTE_STOP.exec(systemRaw)?.[1]    ||
-							REGEX_ROUTE_STATION.exec(systemRaw)?.[1] ||
-							REGEX_ROUTE_CURRENT.exec(systemRaw)?.[1] ||
+							REGEX_ROUTE_SYSTEM.exec(systemRaw)?.[1]   ||
+							REGEX_ROUTE_STARGATE.exec(systemRaw)?.[1] ||
+							REGEX_ROUTE_STOP.exec(systemRaw)?.[1]     ||
+							REGEX_ROUTE_STATION.exec(systemRaw)?.[1]  ||
+							REGEX_ROUTE_CURRENT.exec(systemRaw)?.[1]  ||
 							REGEX_ROUTE_WAYPOINT.exec(systemRaw)?.[1]
 						);
 
