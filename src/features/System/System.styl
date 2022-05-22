@@ -1,0 +1,143 @@
+.System
+	margin 0.5rem 0
+
+	&:first-child
+		margin-top 0
+
+	&:last-child
+		margin-bottom 0
+
+
+.System-summary
+	align-items  stretch
+	display      flex
+	flex-wrap    nowrap
+
+
+.System-status
+	align-items      center
+	align-self       center
+	background-color var(--fg)
+	border-radius    0.8rem
+	color            var(--bg)
+	display          flex
+	font-size        0.6rem
+	font-weight      600
+	height           1.6rem
+	justify-content  center
+	margin-right     0.5rem
+	width            1.6rem
+
+	&[data-status='high']
+		background-color var(--threat-high)
+		color            var(--threat-high-fg)
+
+	&[data-status='medium']
+		background-color var(--threat-medium)
+		color            var(--threat-medium-fg)
+
+	&[data-status='low']
+		background-color var(--threat-low)
+		color            var(--threat-low-fg)
+
+	&[data-status='none']
+		background-color var(--threat-none)
+		color            var(--threat-none-fg)
+
+
+.System-name
+	align-items     center
+	border-radius   var(--border-radius)
+	display         flex
+	flex-grow       1
+	font-size       1rem
+	font-weight     600
+	height          3rem
+	padding         0 1rem
+	text-decoration none
+
+	&:after
+		border-top  dotted 2px @css { hsla(var(--fg-hsl), 0.1) }
+		content     ''
+		flex-grow   1
+		height      0
+		margin-left 2rem
+
+	&:hover
+		background-color @css { hsla(var(--accent-hsl),    1.0) } !important
+		color            @css { hsla(var(--accent-fg-hsl), 1.0) } !important
+
+		&:after
+			display none !important
+
+
+.System:hover
+
+	.System-name
+		background-color @css { hsla(var(--fg-hsl), 0.1) }
+		color            @css { hsla(var(--fg-hsl), 1.0) }
+
+
+.System-isk-destroyed
+	align-items     center
+	border-radius   var(--border-radius)
+	display         flex
+	font-size       0.9rem
+	height          3rem
+	justify-content flex-end
+	margin-left     0.5rem
+	padding         0 1rem
+
+	&[data-threat='high']
+		background-color var(--threat-high)
+		color            var(--threat-high-fg)
+
+	&[data-threat='medium']
+		background-color var(--threat-medium)
+		color            var(--threat-medium-fg)
+
+	&[data-threat='low']
+		background-color var(--threat-low)
+		color            var(--threat-low-fg)
+
+	&[data-threat='none']
+		background-color var(--bg-hsl)
+		color            var(--fg-hsl)
+		border           solid 2px @css { hsla(var(--fg-hsl), 0.1) }
+
+
+.System-do-get-encounters
+	font-size   0.8rem
+	margin-left 0.5rem
+
+
+.System[data-state-encounters='loading']
+
+	.System-isk-destroyed
+		display none
+
+	.System-do-get-encounters
+		animation        var(--animation-blink)
+		background-color inherit !important
+		color            inherit !important
+		cursor           auto
+		display          flex
+		pointer-events   none
+
+
+.System[data-state-encounters='ready']
+
+	.System-isk-destroyed
+		display flex
+
+	.System-do-get-encounters
+		display none
+
+
+.System[data-state-encounters='failed']
+
+	.System-isk-destroyed
+		display none
+
+	.System-do-get-encounters
+		display flex

@@ -1,0 +1,87 @@
+.Encounter
+	display         flex
+	align-items     stretch
+	flex-wrap       nowrap
+	justify-content stretch
+	margin          0.5rem 0
+	text-decoration none
+
+
+.Encounter-time
+	align-self   center
+	font-size    0.8rem
+	margin-right 1rem
+	text-align   right
+	padding-left 3rem
+	opacity      0.6
+
+.Encounter-victim
+	display    flex
+	flex-basis 25rem
+
+	.Pilot
+		flex-grow 1
+
+
+.Encounter-attackers
+	display       flex
+	flex-wrap     nowrap
+	overflow      hidden
+	padding-left  1rem
+	padding-right 1rem
+	position      relative
+	flex-basis    100%
+
+	.Pilot
+		margin-right 0.2rem
+
+
+	&:after
+		bottom   0
+		position absolute
+		right    0
+		top      0
+		width    3rem
+		content  ''
+		background @css { hsla(var(--bg-hsl), 1.0) }
+		background @css { linear-gradient(90deg, hsla(var(--bg-hsl), 0) 0%, hsla(var(--bg-hsl), 1) 100%) }
+
+
+.Encounter-isk-destroyed
+	align-items     center
+	justify-content center
+	border-radius   var(--border-radius)
+	display         flex
+	font-size       0.8rem
+	padding         0 1rem
+	flex-basis      10rem
+	white-space     nowrap
+	opacity         0.6
+
+
+	&[data-threat='high']
+		background-color @css { hsla(var(--threat-high-hsl),    0.2) }
+		color            @css { hsla(var(--threat-high-fg-hsl), 1.0) }
+
+	&[data-threat='medium']
+		background-color @css { hsla(var(--threat-medium-hsl),    0.2) }
+		color            @css { hsla(var(--threat-medium-fg-hsl), 1.0) }
+
+	&[data-threat='low']
+		background-color @css { hsla(var(--threat-low-hsl),    0.2) }
+		color            @css { hsla(var(--threat-low-fg-hsl), 1.0) }
+
+
+.Encounter:hover
+
+	.Encounter-time
+		opacity 1
+
+
+	.Encounter-isk-destroyed
+		opacity 1
+
+
+	.Pilot[data-is-victim='true']
+		background-color @css { hsla(var(--threat-low-hsl),    0.2) }
+		color            @css { hsla(var(--threat-low-fg-hsl), 1.0) }

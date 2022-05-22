@@ -1,0 +1,10 @@
+template#templateLookup
+	form.Lookup(name='lookup' novalidate)
+		textarea.Lookup-names(name='systems' placeholder='Manage Route, Waypoints, select all, paste here')
+		span.Lookup-logo(title='Eve Route Intel')
+
+		button.Lookup-submit(name='doLookup' type='submit') Look up
+
+		footer.Lookup-acknowledgements
+			p Data from <a href='https://esi.evetech.net/'>ESI</a> and <a href='https://zkillboard.com/'>zKillboard</a>.
+			p Ship graphics are property of <a href='https://www.ccpgames.com/'>CCP Games</a>.

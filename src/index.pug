@@ -1,0 +1,20 @@
+doctype html
+html(lang='en')
+	head
+		meta(charset='utf-8')
+		meta(name='viewport' content='width=device-width, height=device-height')
+		link(rel='stylesheet' type='text/css' href='./bundle.css')
+		title ERIN
+
+
+	body
+		div#View
+			div#Controls
+			div#Overview
+
+		include ./features/Lookup/Lookup.pug
+		include ./features/System/System.pug
+		include ./features/Encounter/Encounter.pug
+		include ./features/Pilot/Pilot.pug
+
+		script(src='./bundle.js')
