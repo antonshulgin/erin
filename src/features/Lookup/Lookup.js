@@ -3,12 +3,15 @@
 
 	const TEMPLATE = document.getElementById('templateLookup');
 
-	const REGEX_ROUTE_SYSTEM   = /^([a-zA-Z0-9\- ]+)$/;
-	const REGEX_ROUTE_CURRENT  = /^Current location: (.+)$/;
-	const REGEX_ROUTE_STOP     = /^•\s+(.+)$/;
-	const REGEX_ROUTE_STATION  = /^\d+\.\s+(.+?)(?:\s[VIX]+?)?\s-/;
-	const REGEX_ROUTE_WAYPOINT = /^\d+\.\s+(.+?)\s\(/;
-	const REGEX_ROUTE_STARGATE = /^\d+\s+(.+?)\s+Stargate/; // DScan entry
+	const REGEX_SYSTEM_NAME    = /^([a-zA-Z0-9\- ]+)$/;                                            // Just a system name
+	const REGEX_ROUTE_CURRENT  = /^Current location: (.+)$/;                                       // Starting point in the route manager
+	const REGEX_ROUTE_STOP     = /^•\s+(.+)$/;                                                     // Intermediate system in the route manager
+	const REGEX_ROUTE_STATION  = /^\d+\.\s+(.+?)(?:\s[VIX]+?)?\s-/;                                // Station in the route manager
+	const REGEX_ROUTE_WAYPOINT = /^\d+\.\s+(.+?)\s\(/;                                             // Waypoint in the route manager
+	const REGEX_DSCAN_STARGATE = /^\d+\s+(.+?)\s+Stargate/;                                        // DScan entry
+	const REGEX_SYSTEM_LINK    = /<a href=.+>([a-zA-Z0-9\- ]+)<\/a>/;                              // System link
+	const REGEX_SYSTEM_LOCAL   = /EVE System > Channel changed to Local\s+:\s+([a-zA-Z0-9\- ]+)$/; // Local system change message
+
 
 	E.Lookup = (params = {}) => {
 		const root = document.importNode(TEMPLATE.content, true).firstChild;
@@ -47,8 +50,10 @@
 					.map((systemRaw) => systemRaw.trim())
 					.reduce((out, systemRaw) => {
 						const system = (
-							REGEX_ROUTE_SYSTEM.exec(systemRaw)?.[1]   ||
-							REGEX_ROUTE_STARGATE.exec(systemRaw)?.[1] ||
+							REGEX_SYSTEM_NAME.exec(systemRaw)?.[1]    ||
+							REGEX_DSCAN_STARGATE.exec(systemRaw)?.[1] ||
+							REGEX_SYSTEM_LINK.exec(systemRaw)?.[1]    ||
+							REGEX_SYSTEM_LOCAL.exec(systemRaw)?.[1]   ||
 							REGEX_ROUTE_STOP.exec(systemRaw)?.[1]     ||
 							REGEX_ROUTE_STATION.exec(systemRaw)?.[1]  ||
 							REGEX_ROUTE_CURRENT.exec(systemRaw)?.[1]  ||
