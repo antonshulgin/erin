@@ -82,6 +82,11 @@
 		opacity 1
 
 
+	.Encounter-attackers .Pilot:first-child
+		background-color @css { hsla(var(--threat-high-hsl),    0.2) }
+		color            @css { hsla(var(--threat-high-fg-hsl), 1.0) }
+
+
 	.Pilot[data-is-victim='true']
 		background-color @css { hsla(var(--threat-low-hsl),    0.2) }
 		color            @css { hsla(var(--threat-low-fg-hsl), 1.0) }

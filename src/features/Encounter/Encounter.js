@@ -41,14 +41,20 @@
 
 
 		function fetchDetails() {
-			const attackers = killmail.attackers.map((attacker) => E.Pilot(attacker, true, false));
-			const victim    = E.Pilot(killmail.victim, false, true);
+			const attackers = killmail.attackers
+				.sort((a, b)         => (b.damage_done - a.damage_done))
+				.map((attacker, idx) => E.Pilot(attacker, (idx !== 0), false))
+			;
+
+			const victim = E.Pilot(killmail.victim, false, true);
 
 			victim.fetchDetails();
 			attackers.map((attacker) => attacker.fetchDetails());
 
 			dom.victim.replaceChildren(victim.render());
 			dom.attackers.replaceChildren(...attackers.map((attacker) => attacker.render()));
+
+			console.log({ killmail, attackers, victim });
 		}
 
 
