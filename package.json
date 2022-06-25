@@ -1,6 +1,6 @@
 {
   "name": "ERIN",
-  "version": "22.05.22",
+  "version": "26.06.22",
   "description": "Eve Route Intel",
   "private": true,
   "main": "index.js",
